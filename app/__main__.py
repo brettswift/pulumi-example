@@ -22,7 +22,7 @@ output_bucket.bucket.apply(lambda bucket: pulumi.log.info(f"Bucket Name: {bucket
 
 queue = sqs.Queue("ingress_queue", name=f"{project_stack}_ingress-queue")
 handler_args = simple_lambda.SimpleLambdaArgs(
-    codepath="../lambdas/queue_processor/",
+    codepath="../lambdas/queue_processor/publish/package.zip",
     description="Handles Queue Events",
     env_vars={
         "BUCKET_NAME": output_bucket.bucket,
@@ -70,6 +70,7 @@ bucket_policy = aws.iam.RolePolicy(
 pulumi.export("queue_url", queue.id)
 pulumi.export("bucket_name", output_bucket.id)
 pulumi.export("bucket_prefix", f"{project_stack}")
+
 pulumi.export(
     "log_group_name",
     pulumi.Output.concat("/aws/lambda/", queue_consumer_lambda.lambda_function.name),
@@ -91,3 +92,5 @@ pulumi.export(
     "command_view_s3",
     "aws s3 ls  s3://$(pulumi stack output bucket_name)/$(pulumi stack output bucket_prefix)/",
 )
+
+pulumi.export("lambda-role-name", queue_consumer_lambda.lambda_role.name)

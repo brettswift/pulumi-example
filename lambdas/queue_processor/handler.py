@@ -2,10 +2,23 @@ import logging
 import os
 import boto3
 from datetime import datetime
+from pythonjsonlogger import jsonlogger  # <-  add this
+import sys
 
 # Configure logging
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
+
+
+logger = logging.getLogger()
+stdout_handler = logging.StreamHandler(stream=sys.stdout)
+
+format_output = jsonlogger.JsonFormatter(
+    "%(levelname)s : %(name)s : %(message)s : %(asctime)s"
+)
+
+stdout_handler.setFormatter(format_output)
+logger.addHandler(stdout_handler)
 
 def handler(event, context):
     logger.info("Received event")

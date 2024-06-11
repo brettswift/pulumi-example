@@ -95,7 +95,7 @@ class SimpleLambda(ComponentResource):
             handler=handler,
             memory_size=self.args.memory_size,
             role=role.arn,
-            runtime="python3.8",
+            runtime="python3.12",
             timeout=self.args.timeout,
             environment=aws.lambda_.FunctionEnvironmentArgs(
                 variables=self.args.env_vars
