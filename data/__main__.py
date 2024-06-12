@@ -8,6 +8,6 @@ project = pulumi.get_project()
 project_stack = f"{project}-{stack}"
 
 bucket_name = f"{project_stack}-{account_id}"
-bucket = s3.Bucket(bucket_name, bucket=bucket_name)
+bucket = s3.Bucket(bucket_name, bucket=bucket_name, force_destroy=True)
 
 pulumi.export("bucket_name", bucket.bucket)
