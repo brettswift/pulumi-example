@@ -77,39 +77,8 @@ class SimpleLambda(ComponentResource):
             role=role.name,
             policy_arn="arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
         )
-
-        # for name, policy_arn in policy_arns.items():
-        #     aws.iam.RolePolicyAttachment(
-        #         name,
-        #         role=role.name,
-        #         policy_arn=policy_arn,
-        #         opts=self.child_opts,
-        #     )
-
+ 
         return role
-
-    # def create_lambda_s3_policy(self) -> aws.iam.policy:
-    #     return aws.iam.Policy(
-    #         f"{self.name}-lambda-bucket-access",
-    #         description="policy to access S3 bucket",
-    #         policy=self.args.s3_bucket.apply(
-    #             lambda arn: json.dumps(
-    #                 {
-    #                     "Version": "2012-10-17",
-    #                     "Statement": [
-    #                         {
-    #                             "Effect": "Allow",
-    #                             "Action": [
-    #                                 "s3:*",
-    #                             ],
-    #                             "Resource": f"{arn}/*",
-    #                         }
-    #                     ],
-    #                 }
-    #             )
-    #         ),
-    #         opts=self.child_opts,
-    #     )
 
     def create_lambda(
         self,

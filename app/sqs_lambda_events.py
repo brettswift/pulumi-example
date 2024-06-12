@@ -44,7 +44,6 @@ class EventsQueueToLambda(ComponentResource):
         )
 
     def create_policy_and_attach(self) -> None:
-        # Create a policy that allows the 'sqs:ReceiveMessage' action
         policy = aws.iam.Policy(
             f"{self.name}-sqs-policy",
             description=f"Policy for {self.name} lambda function",
@@ -69,7 +68,6 @@ class EventsQueueToLambda(ComponentResource):
             ),
         )
 
-        # Attach the policy to the lambda function role
         aws.iam.RolePolicyAttachment(
             f"{self.name}-sqs-policy-attachment",
             role=self.args.lambda_role_name,
